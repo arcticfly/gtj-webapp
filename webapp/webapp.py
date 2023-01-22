@@ -1,8 +1,7 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-import requests
 import json
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
 
 
 INITIAL_INPUT_TEXT="Horseback riding"
@@ -11,24 +10,30 @@ INITIAL_SAMPLE_JSON='{"outdoors": boolean, "indoors": boolean, "duration": integ
 
 st.title('GPT to JSON')
 
-# @st.cache
-def get_json(input_text: str, questions: str, sample_json: str):
+
+questions_prompt = PromptTemplate(
+    input_variables=["text", "questions", "json"],
+    template="Parse the following text: \n{text} \n\n return these questions in form of the json provided: \n\n json: {json} \n questions:\n{questions} \n\n explain your answer before you fill out the json. End your response with the json object. Make sure that all your answers exactly match the json type specified. Label the json object with the label 'json:'",
+)
+llm = OpenAI(temperature=0)
+
+@st.cache
+def get_original_response(input_text: str, questions: str, sample_json: str) -> str:
     try:
-        r = requests.post('https://gpt-to-json.loca.lt/generate-json', json={'text': input_text, 'questions': questions, 'json': sample_json})
-        print("r", r)
-        print('r.json', r.json())
-        return r.json()
+        formatted_questions_prompt = questions_prompt.format(
+            text=input_text,
+            questions=questions,
+            json=sample_json
+        )
+        return llm(formatted_questions_prompt)
+    except:
+        return 'Failed to fetch response'
+
+def extract_json(original_response: str) -> str:
+    try:
+        return original_response[original_response.find('json:') + len('json:'):]
     except:
         return 'Failed to fetch json'
-
-def cannot_get_json(input_text: str, questions: str, sample_json: str):
-    if not input_text or input_text == '':
-        return True
-    if not questions or questions == '':
-        return True
-    if not sample_json or sample_json == '':
-        return True
-    return False
 
 
 input_text = st.text_area("Input text", value=INITIAL_INPUT_TEXT, max_chars=None, key=None, placeholder="We the people, in order to form...", label_visibility="visible")
@@ -37,7 +42,11 @@ sample_json = st.text_area("Sample JSON", value=INITIAL_SAMPLE_JSON, max_chars=N
 
 displayed_json = st.text('Generating json...')
 
-json_object = json.loads(get_json(input_text, questions, sample_json))
+original_response = get_original_response(input_text, questions, sample_json)
+full_response = st.text_area("Full response", value=original_response.strip(), max_chars=None, key=None, placeholder="We the people, in order to form...", label_visibility="visible")
 
-displayed_json = st.text(json.dumps(json_object, indent=2))
+extracted_json = extract_json(original_response)
+
+displayed_json.write(json.dumps(json.loads(extracted_json), indent=2))
+
 
