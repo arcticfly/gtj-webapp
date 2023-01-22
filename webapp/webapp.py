@@ -5,7 +5,7 @@ from langchain.prompts import PromptTemplate
 
 
 INITIAL_INPUT_TEXT="Horseback riding"
-INITIAL_QUESTIONS_TEXT="Which tags apply to this activity? How long does it usually take in minutes? How would you rate the cost and energy level on a scale from 1 to 10?"
+INITIAL_QUESTIONS_TEXT="Which tags apply to this activity? How long does it usually take in minutes? How would you rate the monetary cost from 0-10 and energy level from 1-10?"
 INITIAL_SAMPLE_JSON='{"outdoors": boolean, "indoors": boolean, "duration": integer, "cost": integer, "energy": integer}'
 
 st.title('GPT to JSON')
