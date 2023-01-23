@@ -9,3 +9,7 @@ This app is a simple proof of concept that demonstrates the ability of GPT-3 to 
 1. Install poetry on your machine if you haven't already.
 2. Run `poetry install` in the root directory to install all python packages this project depends on.
 3. Run `poetry run streamlit run ./webapp/webapp.py` and you should be good to go!
+
+## Example
+
+To see a running instance of this app, check out [this example](https://arcticfly-gtj-webapp-webappwebapp-gurcy6.streamlit.app/).

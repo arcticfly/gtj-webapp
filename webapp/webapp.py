@@ -4,9 +4,14 @@ from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 
 
-INITIAL_INPUT_TEXT="Horseback riding"
-INITIAL_QUESTIONS_TEXT="Which tags apply to this activity? How long does it usually take in minutes? How would you rate the monetary cost from 0-10 and energy level from 1-10?"
-INITIAL_SAMPLE_JSON='{"outdoors": boolean, "indoors": boolean, "duration": integer, "cost": integer, "energy": integer}'
+INITIAL_INPUT_TEXT="""Welcome To Simply Dental
+THE TOP-REVIEWED DENTAL PRACTICE
+IN LOS ALGODONES, MEXICO
+Simply Dental is committed to providing world-class cosmetic, restorative, and general dentistry.  Our modern office is operated by a team of highly experienced dentists who provide technology-assisted treatments and superior personalized care during every procedure. That is why patients abroad, as well as in Los Algodones and all over Mexico, recommend Simply Dental to their friends and family. We are proudly Number One when it comes to positive Google reviews.
+
+"""
+INITIAL_QUESTIONS_TEXT="Which tags apply to this dental office? Are they trustworthy? How would you rate their friendliness on a scale from 1 to 10? How would you rate their quality on a scale from 1 to 10?"
+INITIAL_SAMPLE_JSON='{"trustworthy": boolean, "caters_to_americans": boolean, "friendliness": integer, "high_quality": integer}'
 
 st.title('GPT to JSON')
 
