@@ -6,9 +6,10 @@ This app is a simple proof of concept that demonstrates the ability of GPT-3 to 
 
 ## Running the app
 
-1. Install poetry on your machine if you haven't already.
-2. Run `poetry install` in the root directory to install all python packages this project depends on.
-3. Run `poetry run streamlit run ./webapp/webapp.py` and you should be good to go!
+1. Create a new `.env` file based on the `.env.example` provided and insert your own OpenAI token.
+2. Install poetry on your machine if you haven't already.
+3. Run `poetry install` in the root directory to install all python packages this project depends on.
+4. Run `poetry run streamlit run ./webapp/webapp.py` and you should be good to go!
 
 ## Example
 
